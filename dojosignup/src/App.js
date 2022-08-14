@@ -14,7 +14,10 @@ function App() {
           <h1 className='relative text-center font-bold text-xl pt-6'>Calendar</h1>
         </div>
         
-        <Calendar />
+        <div className='flex justify-center relative'>
+          <Calendar />
+        </div>
+        
           
       </div>
     </RecoilRoot>

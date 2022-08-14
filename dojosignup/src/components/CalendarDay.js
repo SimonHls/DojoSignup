@@ -25,9 +25,9 @@ function CalendarDay(props) {
   
   
   return (
-    <div className={`w-20 h-20 rounded-full flex justify-center shadow-md
-          hover:cursor-pointer transition ease-in 
-          ${isSelected ? 'bg-orange-500' : 'bg-gray-200'}`}
+    <div className={`w-20 h-20 rounded-sm flex justify-center shadow-md
+          hover:cursor-pointer transition ease-in
+          ${isSelected ? 'bg-yellow-300' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-lg'}`}
           onClick={handleDayClick}>
       <h1 className='m-auto font-light text-2xl'> {props.day} </h1>
     </div>

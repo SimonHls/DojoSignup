@@ -1,44 +1,51 @@
 import React from 'react'
-import { ArrowCircleLeftIcon, ArrowCircleRightIcon } from '@heroicons/react/solid'
-import { Button, ButtonGroup } from '@mui/material'
+import { useRecoilState } from 'recoil';
+import { selectedMonthAtom } from '../atoms/selectedMonthAtom';
 import CalendarDay from './CalendarDay'
 import InputSection from './InputSection'
+import MonthPicker from './MonthPicker'
 
 function Calendar() {
 
-  const dayArray = Array.apply(null, {length: 35}).map(Number.call, Number)
-  const dayHeaders = ["Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa.", "So."]
+  
+  const dayHeaders = ["Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa.", "So."];
+  const [selectedMonth, setSelectedMonth] = useRecoilState(selectedMonthAtom);
+
+  const generateDayArray = () => {
+    var dayArray = Array(35);
+    
+    //Gibt de ersten Tag des Monats als Zahl von 1 (Montag) bis 7 (Sonntag)
+    var firstDayOfMoth = getFirstDayOfMonth(
+      selectedMonth.getFullYear(),
+      selectedMonth.getMonth(),
+    ).getDay();
+    
+    
+    for (let i = 0; i < dayArray.length; i++) {
+      dayArray[i] = i;
+    }
+    return dayArray;
+  }
+
+  const dayArray = generateDayArray();
 
   return (
-    <div className=' min-h-screen min-w-full bg-white shadow-md flex relative p-10 mt-4'>
-      <div className='grid grid-cols-3 min-w-full min-h-full'>
+    <div className=' min-h-screen bg-white shadow-md flex relative p-10'>
+      <div className='grid grid-cols-3 gap-x-12 min-w-fit min-h-full'>
         
-        <div className='col-span-2 min-h-fit min-w-full'>
+        <div className='col-span-2 min-h-fit min-w-fit'>
           
-          <div className='p-4  top-0 left-12 flex justify-start space-x-5'>
-            <div className=' w-48 h-18 border-black border rounded-md bg-gray-200 text-center inline-block align-middle'>
-              <h1 className=' mt-4 font-light text-lg'>Oktober 2022</h1>
-            </div>
-            <ButtonGroup size="large" aria-label="large button group">
-              <Button>
-                <ArrowCircleLeftIcon className=' w-12 h-12'/>
-              </Button>
-              <Button>
-                <ArrowCircleRightIcon className=' w-12 h-12'/>
-              </Button>
-            </ButtonGroup>
-          </div>
-
-          <div className='mt-10 grid grid-cols-7 auto-cols-auto place-items-center'>
-            {dayHeaders.map((dayHeader) => (
-              <h1>{dayHeader}</h1>
+          <MonthPicker className='top-0 left-12'/>
+           
+          <div className='mt-10 grid grid-cols-7 gap-4 place-items-center'>
+            {dayHeaders.map((dayHeader, index) => (
+              <h1 className=' mb-4 font-light text-xl' key={index}> {dayHeader} </h1>
             ))}
-          </div>
 
-          <div className='mt-10 grid grid-cols-7 space-y-8 place-items-center'>
             {dayArray.map((day, index) => (
               <CalendarDay day={day} key={index}/>
             ))}
+            
           </div>
 
         </div>
@@ -51,3 +58,7 @@ function Calendar() {
 }
 
 export default Calendar
+
+function getFirstDayOfMonth(year, month) {
+  return new Date(year, month, 1);
+}
