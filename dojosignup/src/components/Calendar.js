@@ -14,9 +14,10 @@ function Calendar() {
 
 
   useEffect(() => {
+    //create an array with leading 0 up to first calender day of month, then 1 - days of month
     const createDayArray = () => {
       var dayArray = Array(35);
-      //Wie viele Tage hat der Monat?
+      //WHow many days in a month
       var daysInMonth = getDaysInMonth(selectedMonth.getFullYear(), selectedMonth.getMonth());
       console.log(daysInMonth);
 

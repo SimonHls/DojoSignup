@@ -14,6 +14,7 @@ function CalendarDay(props) {
   };
 
   useEffect(() => {
+    //Set isSelected to true, if day is clicked and not already selected
     const handleSelectionChange = () => {
       if (props.day === selectedDay && props.day !== 0) {
         setIsSelected(true);
@@ -26,6 +27,7 @@ function CalendarDay(props) {
     handleSelectionChange();
   }, [selectedDay])
 
+  //check if real day is selected (wrong days have props.day = 0)
   if (props.day !== 0) {
   return (
     <div className={`w-20 h-20 rounded-sm flex justify-center shadow-md
@@ -37,8 +39,7 @@ function CalendarDay(props) {
   )}
   else {
     return (
-      <div className='w-20 h-20 opacity-0'>
-      </div>
+      <div className='w-20 h-20 opacity-0' />
     )}
 }
 
