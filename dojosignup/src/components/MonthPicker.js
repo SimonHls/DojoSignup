@@ -18,7 +18,7 @@ function MonthPicker() {
     var newDate = new Date(selectedMonth.setMonth(selectedMonth.getMonth()-1));
     setSelectedMonth(newDate);
   }
-  
+
 
   return (
     <div className='p-4 flex justify-start space-x-5'>
