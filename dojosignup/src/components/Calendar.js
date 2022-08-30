@@ -5,6 +5,7 @@ import InputSection from './InputSection'
 import MonthPicker from './MonthPicker'
 import {getFirstDayOfMonth, getDaysInMonth } from '../functions/calendarFunctions.js'
 import { selectedDateAtom } from '../atoms/selectedDateAtom';
+import DojosDropdown from './DojosDropdown';
 
 function Calendar() {
 
@@ -22,13 +23,15 @@ function Calendar() {
       var daysInMonth = getDaysInMonth(selectedDate.getFullYear(), selectedDate.getMonth());
       //console.log(daysInMonth);
 
-      //Gibt de ersten Tag des Monats als Zahl von 1 (Montag) bis 7 (Sonntag)
+      //Gibt de ersten Tag des Monats als Zahl wieder 0=Sonntag, 1=Montag, bis 6 = Samstag
       var firstDayOfMonth = getFirstDayOfMonth(
         selectedDate.getFullYear(),
         selectedDate.getMonth(),
       ).getDay();
-      //because sunday is 0 for some reason. No an elegant solution but for nnow its ok
-      firstDayOfMonth === 0 ? firstDayOfMonth = 7 : firstDayOfMonth = firstDayOfMonth;
+      //because sunday is 0 for some reason. Not an elegant solution but for now its ok
+      if (firstDayOfMonth === 0) {
+        firstDayOfMonth = 7
+      };
 
       for (let j = 1; j < firstDayOfMonth; j++){
         dayArray[j] = null;
@@ -48,8 +51,8 @@ function Calendar() {
     <div className=' min-h-screen bg-white shadow-md flex p-10'>
       <div className='gap-x-12 min-w-fit min-h-full'>
 
-        <div className=' min-h-fit'>
-
+        <div className=' min-h-fit inline-block justify-center items-center'>
+          <DojosDropdown/>
           <MonthPicker/>
 
           <div className='h-96'>
@@ -77,4 +80,3 @@ function Calendar() {
 }
 
 export default Calendar
-
