@@ -1,42 +1,59 @@
 import React from 'react'
-import Moment from 'moment';
-import { ArrowCircleLeftIcon, ArrowCircleRightIcon } from '@heroicons/react/solid'
-import { Button, ButtonGroup } from '@mui/material'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import { useRecoilState } from 'recoil'
-import { selectedMonthAtom } from '../atoms/selectedMonthAtom'
+import { displayAsMonth } from '../functions/calendarFunctions';
+import { selectedDateAtom } from '../atoms/selectedDateAtom';
 
 function MonthPicker() {
 
-  const [selectedMonth, setSelectedMonth] = useRecoilState(selectedMonthAtom)
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateAtom)
 
   const handleNextMonth = () => {
-    var newDate = new Date(selectedMonth.setMonth(selectedMonth.getMonth()+1));
-    setSelectedMonth(newDate);
+    clearSelection();
+    var newDate = new Date(selectedDate.setDate(1));
+    newDate.setMonth(selectedDate.getMonth()+1)
+    setSelectedDate(newDate);
   }
 
   const handlePrevMonth = () => {
-    var newDate = new Date(selectedMonth.setMonth(selectedMonth.getMonth()-1));
-    setSelectedMonth(newDate);
+    clearSelection();
+    var newDate = new Date(selectedDate.setDate(1));
+    newDate.setMonth(selectedDate.getMonth()-1)
+    setSelectedDate(newDate);
   }
 
-
   return (
-    <div className='p-4 flex justify-start space-x-5'>
-      <div className=' w-48 h-18 border-black border rounded-md bg-gray-200 text-center inline-block align-middle'>
-        <h1 className=' mt-4 font-light text-lg'> { Moment(selectedMonth).format('MMM YYYY') } </h1>
+    <div className='flex justify-center space-x-5'>
+
+      <div className=' p-1 rounded-bl-md rounded-tl-md cursor-pointer text-gray-500
+          hover:text-black transition-all ease-in-out'
+            onClick={handlePrevMonth}>
+        <ChevronLeftIcon className='w-10 h-10'/>
       </div>
-      <div className='flex'>
-        <div className='bg-yellow-400 p-2 rounded-bl-md rounded-tl-md cursor-pointer
-              hover:bg-yellow-200'
-             onClick={handlePrevMonth}>
-          <ArrowCircleLeftIcon className=' w-12 h-12'/>
-        </div>
-        <div onClick={handleNextMonth}>
-          <ArrowCircleRightIcon className=' w-12 h-12'/>
-        </div>
+
+      <div className=' w-32 min-h-full rounded-md bg-white flex justify-center items-center'>
+        <h1 className=' font-light text-lg text-black'>
+          { displayAsMonth(selectedDate) }
+        </h1>
       </div>
+
+      <div className=' p-1 rounded-br-md rounded-tr-md cursor-pointer text-gray-600
+          hover:text-black  transition-all ease-in-out'
+            onClick={handleNextMonth}>
+        <ChevronRightIcon className='w-10 h-10'/>
+      </div>
+
     </div>
   )
 }
 
 export default MonthPicker
+
+function clearSelection() {
+  if(document.selection && document.selection.empty) {
+      document.selection.empty();
+  } else if(window.getSelection) {
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+  }
+}

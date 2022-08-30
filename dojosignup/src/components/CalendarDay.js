@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { useRecoilState } from 'recoil'
-import { selectedDayAtom } from '../atoms/selectedDayAtom'
+import { selectedDateAtom } from '../atoms/selectedDateAtom'
 
 function CalendarDay(props) {
 
-  const [selectedDay, setSelectedDay] = useRecoilState(selectedDayAtom);
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateAtom);
   const [isSelected, setIsSelected] = useState(false);
 
   const handleDayClick = () => {
-    if (selectedDay !== props.day && props.day !== 0) {
-      setSelectedDay(props.day);
+    //selectedDate.getDate() returns 31 for the 31st of october
+    if (selectedDate.getDate() !== props.day && props.day !== 0) {
+      var newDate = new Date(selectedDate.setDate(props.day));
+      setSelectedDate(newDate);
     }
   };
 
   useEffect(() => {
     //Set isSelected to true, if day is clicked and not already selected
     const handleSelectionChange = () => {
-      if (props.day === selectedDay && props.day !== 0) {
+      //selectedDate.getDate() - 1 returns 31 for the 31st of october
+      if (props.day === selectedDate.getDate()  && props.day !== 0) {
         setIsSelected(true);
         return;
       }
@@ -25,21 +28,22 @@ function CalendarDay(props) {
       }
     }
     handleSelectionChange();
-  }, [selectedDay])
+  }, [selectedDate, props.day])
 
   //check if real day is selected (wrong days have props.day = 0)
-  if (props.day !== 0) {
+  if (props.day !== null) {
   return (
-    <div className={`w-20 h-20 rounded-sm flex justify-center shadow-md
+    <div className={`w-12 h-12 rounded-full flex justify-center shadow-md
           hover:cursor-pointer transition ease-in
-          ${isSelected ? 'bg-yellow-300' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-lg'}`}
+          ${isSelected ? 'bg-yellow-400' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-lg'}
+          ${props.id % 7 === 1 || props.id % 7 === 0 ? 'text-red-700' : 'text-black'}`}
           onClick={handleDayClick}>
-      <h1 className='m-auto font-light text-2xl'> {props.day} </h1>
+      <h1 className='m-auto font-light text-xl'> {props.day} </h1>
     </div>
   )}
   else {
     return (
-      <div className='w-20 h-20 opacity-0' />
+      <div className='w-12 h-12 opacity-0' />
     )}
 }
 
