@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRecoilState } from 'recoil'
-import { selectedDateAtom } from '../atoms/selectedDateAtom'
+import { selectedDateAtom } from '../../atoms/selectedDateAtom'
 
 function CalendarDay(props) {
 

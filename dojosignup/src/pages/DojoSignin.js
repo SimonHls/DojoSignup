@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil';
-import CalendarDay from './CalendarDay'
-import InputSection from './InputSection'
-import MonthPicker from './MonthPicker'
+import CalendarDay from './components/CalendarDay'
+import InputSection from './components/InputSection'
+import MonthPicker from './components/MonthPicker'
 import {getFirstDayOfMonth, getDaysInMonth } from '../functions/calendarFunctions.js'
 import { selectedDateAtom } from '../atoms/selectedDateAtom';
-import DojosDropdown from './DojosDropdown';
+import DojosDropdown from './components/DojosDropdown';
 
 function Calendar() {
 

@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
-import { selectedDateAtom } from '../atoms/selectedDateAtom';
+import { selectedDateAtom } from '../../atoms/selectedDateAtom';
 
 function InputSection() {
 

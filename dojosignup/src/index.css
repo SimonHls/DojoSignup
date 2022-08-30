@@ -15,3 +15,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@layer components {
+  .blue-button {
+    @apply w-52 p-2 px-4 rounded-2xl bg-blue-700 text-white text-xl font-light
+    hover:shadow-md hover:bg-blue-600 transition-all ease-out cursor-pointer;
+  }
+
+}

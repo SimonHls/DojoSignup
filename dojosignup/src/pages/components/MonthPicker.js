@@ -1,8 +1,8 @@
 import React from 'react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import { useRecoilState } from 'recoil'
-import { displayAsMonth } from '../functions/calendarFunctions';
-import { selectedDateAtom } from '../atoms/selectedDateAtom';
+import { displayAsMonth } from '../../functions/calendarFunctions';
+import { selectedDateAtom } from '../../atoms/selectedDateAtom';
 
 function MonthPicker() {
 
