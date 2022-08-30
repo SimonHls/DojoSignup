@@ -33,9 +33,9 @@ function CalendarDay(props) {
   //check if real day is selected (wrong days have props.day = 0)
   if (props.day !== null) {
   return (
-    <div className={`w-12 h-12 rounded-full flex justify-center shadow-md
-          hover:cursor-pointer transition ease-in
-          ${isSelected ? 'bg-yellow-400' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-lg'}
+    <div className={`w-12 h-12 rounded-full flex justify-center shadow-sm
+          hover:cursor-pointer transition ease-out
+          ${isSelected ? 'bg-yellow-400' : 'bg-gray-200 hover:bg-gray-300 hover:shadow-md'}
           ${props.id % 7 === 1 || props.id % 7 === 0 ? 'text-red-700' : 'text-black'}`}
           onClick={handleDayClick}>
       <h1 className='m-auto font-light text-xl'> {props.day} </h1>
