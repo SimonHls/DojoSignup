@@ -18,8 +18,8 @@ code {
 
 @layer components {
   .blue-button {
-    @apply w-52 p-2 px-4 rounded-2xl bg-blue-700 text-white text-xl font-light
-    hover:shadow-md hover:bg-blue-600 transition-all ease-out cursor-pointer;
+    @apply flex items-center justify-center w-64 p-3 px-4 rounded-2xl bg-blue-700 text-white text-2xl font-light
+    hover:bg-blue-600 hover:shadow-lg transition-all ease-out cursor-pointer shadow-sm;
   }
 
 }

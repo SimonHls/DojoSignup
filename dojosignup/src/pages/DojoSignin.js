@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil';
-import CalendarDay from './components/CalendarDay'
-import InputSection from './components/InputSection'
-import MonthPicker from './components/MonthPicker'
+import CalendarDay from './components/DojoSignin/CalendarDay'
+import InputSection from './components/DojoSignin/InputSection'
+import MonthPicker from './components/DojoSignin/MonthPicker'
 import {getFirstDayOfMonth, getDaysInMonth } from '../functions/calendarFunctions.js'
 import { selectedDateAtom } from '../atoms/selectedDateAtom';
-import DojosDropdown from './components/DojosDropdown';
+import DojosDropdown from './components/DojoSignin/DojosDropdown';
+import Header from './components/global/Header';
+import Sidebar from './components/global/Sidebar';
+import { sidebarVisibleAtom } from '../atoms/sidebarVisibleAtom';
 
 function Calendar() {
 
 
   const dayHeaders = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateAtom);
+  const [sidebarOpen, setSidebarOpen] = useRecoilState(sidebarVisibleAtom);
   const [dayArray, setDayArray] = useState([])
 
+  const handleSidebarClose = () => {
+    setSidebarOpen(false);
+  }
 
   useEffect(() => {
     //create an array with leading 0 up to first calender day of month, then 1 - days of month
@@ -48,34 +55,42 @@ function Calendar() {
 
 
   return (
-    <div className=' min-h-screen bg-white shadow-md flex p-10'>
-      <div className='gap-x-12 min-w-fit min-h-full'>
+    <div className='min-w-full flex-col'>
 
-        <div className=' min-h-fit inline-block justify-center items-center'>
-          <DojosDropdown/>
-          <MonthPicker/>
+      <Header>Neue Anmeldung</Header>
 
-          <div className='h-96'>
-            <div className='mt-4 grid grid-cols-7 gap-3'>
-              {dayHeaders.map((dayHeader, index) => (
-                <div className=' w-12 h-12 flex items-center justify-center' key={index}>
-                  <h1 className='font-extralight p-2 text-xl'> {dayHeader} </h1>
-                </div>
-              ))}
+      <div className='mx-auto min-h-screen max-w-md bg-white shadow-md flex p-10'>
 
-              {dayArray.map((day, index) => (
-                <CalendarDay day={day} key={index} id={index}/>
-              ))}
+        <div className='gap-x-12 min-w-fit min-h-full'>
 
+          <Sidebar open={sidebarOpen} setOpen={handleSidebarClose}/>
+
+          <div className=' min-h-fit inline-block justify-center items-center'>
+            <DojosDropdown/>
+            <MonthPicker/>
+
+            <div className=' h-96'>
+              <div className='mt-4 grid grid-cols-7 gap-3'>
+                {dayHeaders.map((dayHeader, index) => (
+                  <div className=' w-12 h-12 flex items-center justify-center' key={index}>
+                    <h1 className='font-extralight p-2 text-xl'> {dayHeader} </h1>
+                  </div>
+                ))}
+
+                {dayArray.map((day, index) => (
+                  <CalendarDay day={day} key={index} id={index}/>
+                ))}
+
+              </div>
             </div>
+
           </div>
 
-        </div>
-
-        <InputSection/>
+          <InputSection/>
 
         </div>
       </div>
+    </div>
   )
 }
 

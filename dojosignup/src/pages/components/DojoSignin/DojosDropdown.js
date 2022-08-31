@@ -3,9 +3,9 @@ import { Fragment, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, CogIcon } from '@heroicons/react/solid'
 import { useRecoilState } from 'recoil';
-import { selectedDojoAtom } from '../../atoms/selectedDojoAtom';
-import { db } from "../../firebase"
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { dojoSigninSelectedDojoAtom } from '../../../atoms/dojoSigninSelectedDojoAtom';
+import { db } from "../../../firebase"
+import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 
 
 function classNames(...classes) {
@@ -14,14 +14,14 @@ function classNames(...classes) {
 
 export default function Example() {
 
-  const [selectedDojo, setSelectedDojo] = useRecoilState(selectedDojoAtom);
+  const [selectedDojo, setSelectedDojo] = useRecoilState(dojoSigninSelectedDojoAtom);
   const [dojoList, setDojoList] = useState([])
   //const dojoList = ["Dojo Handfertigkeiten", "Dojo Messmittel", "Montagedojo", "Spaßdojo nur zum Spaß", "Dojo schweißen", "Dojo löten"]
 
   //firebase connections
   useEffect(() => {
 		// listens for changes in the firestore db, returns new db state as snapshot
-		const unsubscribe = onSnapshot(query(collection(db, 'dojos')), snapshot => {
+		const unsubscribe = onSnapshot(query(collection(db, 'dojos'), orderBy('name')), snapshot => {
 			setDojoList(snapshot.docs);
 		})
 		// prevents multiple db listeners

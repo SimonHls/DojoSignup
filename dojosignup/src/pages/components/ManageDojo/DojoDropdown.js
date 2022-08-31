@@ -3,39 +3,42 @@ import { Fragment, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, CogIcon } from '@heroicons/react/solid'
 import { useRecoilState } from 'recoil';
-import { selectedDojoAtom } from '../../../atoms/selectedDojoAtom';
+import { manageSelectedDojoAtom } from '../../../atoms/manageSelectedDojoAtom';
 import { db } from "../../../firebase"
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+//Dojo dropown component for the dojo management site
+
 export default function Example() {
 
-  const [selectedDojo, setSelectedDojo] = useRecoilState(selectedDojoAtom);
+  const [selectedDojo, setSelectedDojo] = useRecoilState(manageSelectedDojoAtom);
   const [dojoList, setDojoList] = useState([])
   //const dojoList = ["Dojo Handfertigkeiten", "Dojo Messmittel", "Montagedojo", "Spaßdojo nur zum Spaß", "Dojo schweißen", "Dojo löten"]
 
   //firebase connections
   useEffect(() => {
 		// listens for changes in the firestore db, returns new db state as snapshot
-		const unsubscribe = onSnapshot(query(collection(db, 'dojos')), snapshot => {
+		const unsubscribe = onSnapshot(query(collection(db, 'dojos') ,orderBy('name')), snapshot => {
 			setDojoList(snapshot.docs);
 		})
 		// prevents multiple db listeners
 		return unsubscribe;
 	}, [db])
 
-  const handleItemSelect = (name) => {
-    setSelectedDojo(name);
+  const handleItemSelect = (dojo) => {
+    setSelectedDojo([dojo.data().name, dojo.id]);
   }
 
   return (
     dojoList.length > 0 ? (
+
       <div className='flex min-w-full justify-center'>
-        <Menu as="div" className="inline-block mb-6 text-left ">
+        <Menu as="div" className="inline-block text-left ">
 
           {/* Menu closed */}
           <div className=''>
@@ -44,7 +47,7 @@ export default function Example() {
                                   hover:bg-gray-50 hover:cursor-pointer focus:outline-none transition ease-out
                                   ">
               <p className=' w-64 truncate text-base font-normal '>
-                {selectedDojo === "" ? "Dojo auswählen" :  selectedDojo}
+                {selectedDojo[0] === "" ? "Dojo auswählen" :  selectedDojo[0]}
               </p>
               <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5 right-0" aria-hidden="true" />
             </Menu.Button>
@@ -73,7 +76,7 @@ export default function Example() {
 
                       {({ active }) => (
                         <p
-                        onClick={ () => {(active && selectedDojo !== dojo.name)  && handleItemSelect(dojo.data().name)}}
+                        onClick={ () => {(active && selectedDojo !== dojo.name)  && handleItemSelect(dojo)}}
                         className={classNames(
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                           'block px-4 py-2 text-sm hover:cursor-pointer truncate'
@@ -93,17 +96,16 @@ export default function Example() {
 
         </Menu>
       </div>
+
     ) : (
       <div className='flex min-w-full justify-center'>
         <div className="inline-flex w-72 h-12 justify-center items-center rounded-md border border-gray-300
-                                    bg-white px-4 py-2 text-gray-700 shadow-sm mb-5">
+                                    bg-white px-4 py-2 text-gray-700 shadow-sm">
           <CogIcon className="ml-2 mr-2 h-8 w-8 sticky right-0 animate-spin-slow text-blue-500" aria-hidden="true" />
           <p className='w-64 truncate text-base font-normal'>Dojos werden geladen...</p>
         </div>
       </div>
 
     )
-
-
   )
 }
