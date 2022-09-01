@@ -23,7 +23,7 @@ export default function Example() {
   //firebase connections
   useEffect(() => {
 		// listens for changes in the firestore db, returns new db state as snapshot
-		const unsubscribe = onSnapshot(query(collection(db, 'dojos') ,orderBy('name')), snapshot => {
+		const unsubscribe = onSnapshot(query(collection(db, 'dojos') ,orderBy('dojoName')), snapshot => {
 			setDojoList(snapshot.docs);
 		})
 		// prevents multiple db listeners
@@ -31,7 +31,7 @@ export default function Example() {
 	}, [db])
 
   const handleItemSelect = (dojo) => {
-    setSelectedDojo([dojo.data().name, dojo.id]);
+    setSelectedDojo([dojo.data().dojoName, dojo.id]);
   }
 
   return (
@@ -71,18 +71,18 @@ export default function Example() {
               <div className="py-1 max-h-64 overflow-y-auto">
 
                 {dojoList.map((dojo) => (
-                  <div key={dojo.data().id}>
+                  <div key={dojo.id}>
                     <Menu.Item>
 
                       {({ active }) => (
                         <p
-                        onClick={ () => {(active && selectedDojo !== dojo.name)  && handleItemSelect(dojo)}}
+                        onClick={ () => {(active && selectedDojo !== dojo.data().dojoName)  && handleItemSelect(dojo)}}
                         className={classNames(
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                           'block px-4 py-2 text-sm hover:cursor-pointer truncate'
                           )}
                         >
-                          {dojo.data().name}
+                          {dojo.data().dojoName}
                         </p>
                       )}
 

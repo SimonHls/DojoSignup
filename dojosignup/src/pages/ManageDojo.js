@@ -13,7 +13,6 @@ function ManageDojo() {
   const [dojoList, setDojoList] = useState([]);
   const [selectedDojo, setSelectedDojo] = useRecoilState(manageSelectedDojoAtom);
 
-
   //firebase connections
   useEffect(() => {
     // listens for changes in the firestore db, returns new db state as snapshot

@@ -1,7 +1,6 @@
 import './App.css';
 import React from 'react';
 import Landingpage from './pages/Landingpage'
-import DojoSignin from './pages/DojoSignin';
 import {
   RecoilRoot
 } from 'recoil';
@@ -12,6 +11,8 @@ import {
 } from "react-router-dom";
 import ManageDojo from './pages/ManageDojo';
 import { ApplicationControl } from './ApplicationControl';
+import DojoSignupPage from './pages/DojoSignupPage';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -22,12 +23,16 @@ function App() {
             <Routes>
 
               <Route path='/' element={
+                <Login />
+              }/>
+
+              <Route path='/home' element={
                 <Landingpage />
               }/>
 
-              <Route path='/dojosignin' element={
+              <Route path='/dojosignup' element={
                 <div className='flex justify-center relative'>
-                  <DojoSignin />
+                  <DojoSignupPage />
                 </div>
               }/>
 

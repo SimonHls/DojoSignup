@@ -6,10 +6,15 @@ import { Link } from 'react-router-dom'
 import { useRecoilState } from 'recoil';
 import { sidebarVisibleAtom } from '../../../atoms/sidebarVisibleAtom';
 import { PencilIcon } from '@heroicons/react/solid';
+import { logout } from '../../../firebase';
 
 export default function Sidebar() {
 
   const [sidebarVisible, setSidebarVisible] = useRecoilState(sidebarVisibleAtom)
+
+  const handleLogout = () => {
+    logout();
+  }
 
   return (
     <Transition.Root show={sidebarVisible} as={Fragment}>
@@ -72,7 +77,7 @@ export default function Sidebar() {
                     </Link>
 
                     <div className='absolute bottom-0 right-8 cursor-pointer'>
-                      <p className='font-light text-gray-800 hover:underline hover:text-black'>Sign out</p>
+                      <p className='font-light text-gray-800 hover:underline hover:text-black' onClick={handleLogout()}>Sign out</p>
                     </div>
 
                   </div>

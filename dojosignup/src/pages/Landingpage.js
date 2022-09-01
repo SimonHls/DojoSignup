@@ -12,7 +12,7 @@ function Landingpage() {
         </h1>
 
       <div className='p-8 flex flex-col gap-8 text-center justify-center items-center'>
-        <Link className='blue-button' to='/dojosignin'>
+        <Link className='blue-button' to='/dojosignup'>
           Neue Anmeldung
         </Link>
         <Link className='blue-button ' to='/managedojo'>
