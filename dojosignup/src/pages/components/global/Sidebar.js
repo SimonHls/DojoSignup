@@ -7,14 +7,11 @@ import { useRecoilState } from 'recoil';
 import { sidebarVisibleAtom } from '../../../atoms/sidebarVisibleAtom';
 import { PencilIcon } from '@heroicons/react/solid';
 import { logout } from '../../../firebase';
+import SignoutAndRedirect from './SignoutAndRedirect';
 
 export default function Sidebar() {
 
   const [sidebarVisible, setSidebarVisible] = useRecoilState(sidebarVisibleAtom)
-
-  const handleLogout = () => {
-    logout();
-  }
 
   return (
     <Transition.Root show={sidebarVisible} as={Fragment}>
@@ -59,13 +56,13 @@ export default function Sidebar() {
                     {/* CONTENT OF SIDEBAR */}
 
                     <Link className='min-w-full flex justify-start items-center p-2 pl-4 hover:bg-gray-100 transition-all ease-out'
-                          to='/'>
+                          to='/home'>
                       <HomeIcon className='w-5 h-5 mr-2' />
                       Startseite
                     </Link>
 
                     <Link className='min-w-full flex justify-start items-center p-2 pl-4 hover:bg-gray-100 transition-all ease-out'
-                          to='/DojoSignin'>
+                          to='/dojosignup'>
                       <PlusIcon className='w-5 h-5 mr-2' />
                       Neue Anmeldung erstellen
                     </Link>
@@ -76,8 +73,10 @@ export default function Sidebar() {
                       Dojos verwalten
                     </Link>
 
-                    <div className='absolute bottom-0 right-8 cursor-pointer'>
-                      <p className='font-light text-gray-800 hover:underline hover:text-black' onClick={handleLogout()}>Sign out</p>
+                    <div className='absolute bottom-0 right-8 text-light text-gray-800 underline hover:text-blue-800 cursor-pointer'>
+                      <SignoutAndRedirect>
+                        sign out
+                      </SignoutAndRedirect>
                     </div>
 
                   </div>
