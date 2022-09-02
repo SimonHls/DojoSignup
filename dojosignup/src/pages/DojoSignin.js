@@ -12,6 +12,7 @@ import { sidebarVisibleAtom } from '../atoms/sidebarVisibleAtom';
 
 function Calendar() {
 
+    //THIS IS A LEGACY COMPONENT AND WILL BE REPLACED
 
   const dayHeaders = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateAtom);

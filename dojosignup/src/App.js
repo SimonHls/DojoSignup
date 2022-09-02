@@ -15,6 +15,7 @@ import DojoSignupPage from './pages/DojoSignupPage';
 import Login from './pages/Login';
 import PageNotFound from './pages/PageNotFound';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import Register from './pages/Register';
 
 function App() {
 
@@ -60,24 +61,41 @@ function App() {
                   <ManageDojo />
                 }/>
 
+                <Route path='/register' element={
+                  <Register />
+                }/>
+
                 <Route path='*' element={
                   <PageNotFound />
                 }/>
+
               </Routes>
 
               ) : (
 
               // => User is not logged in
               <Routes>
+
                 <Route path='/' element={
                   <Login />
                 }/>
+
                 <Route path='/home' element={
                   <Login />
                 }/>
+
+                <Route path='/login' element={
+                  <Login />
+                }/>
+
+                <Route path='/register' element={
+                  <Register />
+                }/>
+
                 <Route path='*' element={
                   <PageNotFound />
                 }/>
+
               </Routes>
 
               )}

@@ -40,13 +40,16 @@ function Login() {
           placeholder="Password"
         />
         <button
-          className="p-3 text-sm mb-3 text-white bg-red-800 hover:bg-red-700 rounded-md"
+          className="p-3 mt-3 text-sm mb-3 text-white bg-red-800 hover:bg-red-700 rounded-md"
           onClick={() => logInWithEmailAndPassword(email, password)}
         >
           Login
         </button>
-        <p className="font-light text-sm mt-2 mb-4 text-gray-700">oder mit einem externem Anbieter anmelden</p>
-        <button className="p-3 text-sm mb-3 text-white bg-blue-600 hover:bg-blue-500 rounded-md" onClick={signInWithGoogle}>
+        <p className="font-light text-sm mt-2 mb-4 text-gray-700">
+          oder mit einem externem Anbieter anmelden
+        </p>
+        <button className="p-3 text-sm mb-3 text-white bg-blue-600 hover:bg-blue-500 rounded-md" 
+                onClick={signInWithGoogle}>
           Mit Google anmelden
         </button>
         <div className="font-light hover:text-blue-500 underline cursor-pointer text-gray-700 text-sm mt-2">
