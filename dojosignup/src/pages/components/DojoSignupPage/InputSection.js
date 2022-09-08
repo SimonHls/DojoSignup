@@ -32,14 +32,24 @@ function InputSection() {
 
       <Calendar />
 
-      <p className='font-light mt-16'>
-        Persöliche Daten
+      <p className='font-light mt-8 '>
+        Persönliche Daten
       </p>
 
-      <div className='grid md:grid-cols-2 mt-2 gap-5'>
+      <p
+        className=" text-gray-400 underline font-light w-fit text-sm cursor-pointer hover:text-gray-500"
+        onClick={() => insertPersonalData()}
+      >
+        Persönliche Daten aus Profil übertragen
+      </p>
+
+      <div className='sm:grid sm:grid-cols-2 mt-2 gap-4'>
 
         <div className=''>
-          <p className='ml-1 font-extralight text-sm text-gray-700'>Vorname</p>
+          <div className='flex'>
+            <p className='text-red-600'>*</p>
+            <p className='ml-1 font-extralight text-sm text-gray-700'>Vorname</p>
+          </div>
           <input
             type="text"
             spellCheck="false"
@@ -51,7 +61,10 @@ function InputSection() {
         </div>
 
       <div className=''>
-        <p className='ml-1 font-extralight text-sm text-gray-700'>Nachname</p>
+        <div className='flex'>
+          <p className='text-red-600'>*</p>
+          <p className='ml-1 font-extralight text-sm text-gray-700'>Nachname</p>
+        </div>
         <input
           type="text"
           spellCheck="false"
@@ -63,7 +76,10 @@ function InputSection() {
       </div>
 
       <div className=''>
-        <p className='ml-1 font-extralight text-sm text-gray-700'>Personalnummer</p>
+        <div className='flex'>
+          <p className='text-red-600'>*</p>
+          <p className='ml-1 font-extralight text-sm text-gray-700'>Personalnummer</p>
+        </div>
         <input
           type="text"
           spellCheck="false"
@@ -75,7 +91,10 @@ function InputSection() {
       </div>
 
       <div className=''>
-        <p className='ml-1 font-extralight text-sm text-gray-700'>Abteilung</p>
+      <div className='flex'>
+          <p className='text-red-600'>*</p>
+          <p className='ml-1 font-extralight text-sm text-gray-700'>Abteilung</p>
+        </div>
         <input
           type="text"
           spellCheck="false"
@@ -87,10 +106,14 @@ function InputSection() {
       </div>
 
       <div className='col-span-2'>
-        <p className='ml-1 font-extralight text-sm text-gray-700'>Grund der Teilnahme</p>
-        <input
+        <div className='flex'>
+          <p className='text-red-600'>*</p>
+          <p className='ml-1 font-extralight text-sm text-gray-700'>Grund der Teilnahme</p>
+        </div>
+        <textarea
           type="text"
           spellCheck="false"
+          rows="2"
           className="signup-textbox"
           value={submitReason}
           onChange={(e) => setSubmitReason(e.target.value)}
@@ -99,12 +122,12 @@ function InputSection() {
       </div>
 
       </div>
-      <p
-        className=" text-gray-700 mt-1 underline font-light w-fit text-sm cursor-pointer hover:text-gray-500"
-        onClick={() => insertPersonalData()}
-      >
-        Persönliche Daten aus Profil einfügen
-      </p>
+      <div className='relative min-w-full flex justify-end'>
+        <div className=' p-4 mt-4 bg-gray-400 w-fit rounded-lg text-white hover:bg-green-500 cursor-pointer'>
+          Termin buchen
+        </div>
+      </div>
+      
     </div>
   )
 }

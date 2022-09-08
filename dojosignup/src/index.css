@@ -31,7 +31,7 @@ code {
     @apply p-3 text-sm mb-3 bg-gray-200 rounded-md shadow-sm
   }
   .signup-textbox {
-    @apply p-3 text-sm mb-3 bg-gray-200 rounded-md shadow-sm min-w-full
+    @apply p-3 text-sm mb-2 bg-gray-200 rounded-md shadow-sm min-w-full
   }
   .background-animate {
     background-size: 400%;

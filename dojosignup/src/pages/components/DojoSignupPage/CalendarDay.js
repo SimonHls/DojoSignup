@@ -38,12 +38,12 @@ function CalendarDay(props) {
           ${isSelected ? 'bg-yellow-400' : 'bg-gray-200 hover:bg-gray-300 hover:shadow-md'}
           ${props.id % 7 === 1 || props.id % 7 === 0 ? 'text-red-700' : 'text-black'}`}
           onClick={handleDayClick}>
-      <h1 className='m-auto font-light text-xl'> {props.day} </h1>
+      <h1 className='m-auto font-light text-md sm:text-xl'> {props.day} </h1>
     </div>
   )}
   else {
     return (
-      <div className='w-12 h-12 opacity-0' />
+      <div className='w-10 h-10 sm:w-12 sm:h-12 opacity-0' />
     )}
 }
 

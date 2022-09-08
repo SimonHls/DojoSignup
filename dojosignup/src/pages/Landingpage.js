@@ -5,7 +5,7 @@ import { currentUserDataAtom } from '../atoms/currentUserDataAtom';
 import SignoutAndRedirect from './components/global/SignoutAndRedirect';
 
 function Landingpage() {
-  
+
   const [currentUserData, setCurrentUserData] = useRecoilState(currentUserDataAtom);
 
   return (

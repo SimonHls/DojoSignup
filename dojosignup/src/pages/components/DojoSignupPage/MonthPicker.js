@@ -28,7 +28,7 @@ function MonthPicker() {
       <div className=' p-1 rounded-bl-md rounded-tl-md cursor-pointer text-gray-500
           hover:text-black transition-all ease-in-out'
             onClick={handlePrevMonth}>
-        <ChevronLeftIcon className='w-10 h-10'/>
+        <ChevronLeftIcon className='w-8 h-8'/>
       </div>
 
       <div className=' w-32 min-h-full rounded-md bg-white flex justify-center items-center'>
@@ -40,7 +40,7 @@ function MonthPicker() {
       <div className=' p-1 rounded-br-md rounded-tr-md cursor-pointer text-gray-600
           hover:text-black  transition-all ease-in-out'
             onClick={handleNextMonth}>
-        <ChevronRightIcon className='w-10 h-10'/>
+        <ChevronRightIcon className='w-8 h-8'/>
       </div>
 
     </div>
