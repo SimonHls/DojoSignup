@@ -4,6 +4,8 @@ import Header from './components/global/Header'
 import Sidebar from './components/global/Sidebar'
 
 function DojoSignupPage() {
+
+
   return (
     <div className='min-w-full min-h-screen inline-block'>
       <Header>Anmeldung</Header>

@@ -1,27 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil';
-import CalendarDay from './components/DojoSignin/CalendarDay'
-import InputSection from './components/DojoSignin/InputSection'
-import MonthPicker from './components/DojoSignupPage/MonthPicker'
-import {getFirstDayOfMonth, getDaysInMonth } from '../functions/calendarFunctions.js'
-import { selectedDateAtom } from '../atoms/selectedDateAtom';
-import DojosDropdown from './components/DojoSignin/DojosDropdown';
-import Header from './components/global/Header';
-import Sidebar from './components/global/Sidebar';
-import { sidebarVisibleAtom } from '../atoms/sidebarVisibleAtom';
+import { selectedDateAtom } from '../../../atoms/selectedDateAtom';
+import { sidebarVisibleAtom } from '../../../atoms/sidebarVisibleAtom';
+import { getDaysInMonth, getFirstDayOfMonth } from '../../../functions/calendarFunctions';
+import CalendarDay from './CalendarDay';
+import MonthPicker from './MonthPicker';
 
 function Calendar() {
 
-    //THIS IS A LEGACY COMPONENT AND WILL BE REPLACED
-
   const dayHeaders = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateAtom);
-  const [sidebarOpen, setSidebarOpen] = useRecoilState(sidebarVisibleAtom);
   const [dayArray, setDayArray] = useState([])
-
-  const handleSidebarClose = () => {
-    setSidebarOpen(false);
-  }
 
   useEffect(() => {
     //create an array with leading 0 up to first calender day of month, then 1 - days of month
@@ -56,25 +45,15 @@ function Calendar() {
 
 
   return (
-    <div className='min-w-full flex-col'>
+    <div className='grid min-w-full mt-4'>
 
-      <Header>Neue Anmeldung</Header>
+      <MonthPicker/>
 
-      <div className='mx-auto min-h-screen max-w-md bg-white shadow-md flex p-10'>
-
-        <div className='gap-x-12 min-w-fit min-h-full'>
-
-          <Sidebar open={sidebarOpen} setOpen={handleSidebarClose}/>
-
-          <div className=' min-h-fit inline-block justify-center items-center'>
-            <DojosDropdown/>
-            <MonthPicker/>
-
-            <div className=' h-96'>
+      <div className='max-w-fit h-96'>
               <div className='mt-4 grid grid-cols-7 gap-3'>
                 {dayHeaders.map((dayHeader, index) => (
                   <div className=' w-12 h-12 flex items-center justify-center' key={index}>
-                    <h1 className='font-extralight p-2 text-xl'> {dayHeader} </h1>
+                    <h1 className='font-extralight p-1 text-xl'> {dayHeader} </h1>
                   </div>
                 ))}
 
@@ -84,13 +63,6 @@ function Calendar() {
 
               </div>
             </div>
-
-          </div>
-
-          <InputSection/>
-
-        </div>
-      </div>
     </div>
   )
 }

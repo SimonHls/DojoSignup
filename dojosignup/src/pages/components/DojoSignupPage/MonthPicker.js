@@ -23,7 +23,7 @@ function MonthPicker() {
   }
 
   return (
-    <div className='flex justify-center space-x-5'>
+    <div className='flex justify-center w-fit'>
 
       <div className=' p-1 rounded-bl-md rounded-tl-md cursor-pointer text-gray-500
           hover:text-black transition-all ease-in-out'

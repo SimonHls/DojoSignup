@@ -18,7 +18,7 @@ export default function Example() {
 
   const [selectedDojo, setSelectedDojo] = useRecoilState(manageSelectedDojoAtom);
   const [dojoList, setDojoList] = useState([])
-  //const dojoList = ["Dojo Handfertigkeiten", "Dojo Messmittel", "Montagedojo", "Spaßdojo nur zum Spaß", "Dojo schweißen", "Dojo löten"]
+
 
   //firebase connections
   onSnapshot(query(collection(db, 'dojos') ,orderBy('dojoName')), snapshot => {

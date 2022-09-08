@@ -1,14 +1,110 @@
-import React from 'react'
+import React, {useState} from 'react'
+import { useRecoilState } from 'recoil';
+import { currentUserDataAtom } from '../../../atoms/currentUserDataAtom';
+import Calendar from './Calendar.js'
 
 function InputSection() {
+
+  const [currentUserData, setCurrentUserData] = useRecoilState(currentUserDataAtom);
+
+  const [submitFirstName, setSubmitFirstName] = useState("");
+  const [submitLastName, setSubmitLastName] = useState("");
+  const [submitPersNr, setSubmitPersNr] = useState("");
+  const [submitDepartment, setSubmitDepartment] = useState("");
+  const [submitDate, setSubmitDate] = useState();
+  const [submitReason, setSubmitReason] = useState("");
+
+  const insertPersonalData = () => {
+    setSubmitFirstName(currentUserData.firstName);
+    setSubmitLastName(currentUserData.lastName);
+    setSubmitPersNr(currentUserData.persNr);
+    setSubmitDepartment(currentUserData.department);
+  }
+
   return (
     <div className='grid grid-cols-1 mt-8'>
-      <h1 className=' text-xl font-bold'>Neue Dojoanmeldung</h1>
-      <p className='font-light'>Alle verfügbaren Dojo Termine werden hier angezeigt. Die persönlichen Daten werden aus dem Profil übertragen.</p>
 
-      <div className='grid md:grid-cols-2 mt-8 gap-5'>
-          
+      <h1 className=' text-xl font-bold'>Neue Dojoanmeldung</h1>
+
+      <p className='font-light mt-6'>
+        Termin auswählen
+      </p>
+
+      <Calendar />
+
+      <p className='font-light mt-16'>
+        Persöliche Daten
+      </p>
+
+      <div className='grid md:grid-cols-2 mt-2 gap-5'>
+
+        <div className=''>
+          <p className='ml-1 font-extralight text-sm text-gray-700'>Vorname</p>
+          <input
+            type="text"
+            spellCheck="false"
+            className="signup-textbox"
+            value={submitFirstName}
+            onChange={(e) => setSubmitFirstName(e.target.value)}
+            placeholder="Vorname"
+          />
+        </div>
+
+      <div className=''>
+        <p className='ml-1 font-extralight text-sm text-gray-700'>Nachname</p>
+        <input
+          type="text"
+          spellCheck="false"
+          className="signup-textbox"
+          value={submitLastName}
+          onChange={(e) => setSubmitLastName(e.target.value)}
+          placeholder="Nachname"
+        />
       </div>
+
+      <div className=''>
+        <p className='ml-1 font-extralight text-sm text-gray-700'>Personalnummer</p>
+        <input
+          type="text"
+          spellCheck="false"
+          className="signup-textbox"
+          value={submitPersNr}
+          onChange={(e) => setSubmitPersNr(e.target.value)}
+          placeholder="Personalnummer"
+        />
+      </div>
+
+      <div className=''>
+        <p className='ml-1 font-extralight text-sm text-gray-700'>Abteilung</p>
+        <input
+          type="text"
+          spellCheck="false"
+          className="signup-textbox"
+          value={submitDepartment}
+          onChange={(e) => setSubmitDepartment(e.target.value)}
+          placeholder="Abteilung"
+        />
+      </div>
+
+      <div className='col-span-2'>
+        <p className='ml-1 font-extralight text-sm text-gray-700'>Grund der Teilnahme</p>
+        <input
+          type="text"
+          spellCheck="false"
+          className="signup-textbox"
+          value={submitReason}
+          onChange={(e) => setSubmitReason(e.target.value)}
+          placeholder="Grund der Teilnahme"
+        />
+      </div>
+
+      </div>
+      <p
+        className=" text-gray-700 mt-1 underline font-light w-fit text-sm cursor-pointer hover:text-gray-500"
+        onClick={() => insertPersonalData()}
+      >
+        Persönliche Daten aus Profil einfügen
+      </p>
     </div>
   )
 }

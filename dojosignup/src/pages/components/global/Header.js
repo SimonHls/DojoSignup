@@ -3,9 +3,11 @@ import { MenuIcon, XIcon } from '@heroicons/react/solid'
 import { sidebarVisibleAtom } from '../../../atoms/sidebarVisibleAtom';
 import { useRecoilState } from 'recoil';
 import { Transition } from '@headlessui/react';
+import { currentUserDataAtom } from '../../../atoms/currentUserDataAtom';
 
 export const Header = (props) => {
   const [sidebarOpen, setSidebarOpen] = useRecoilState(sidebarVisibleAtom);
+  const [currentUserData, setCurrentUserData] = useRecoilState(currentUserDataAtom);
   return (
     <div className='sticky top-0 z-50 border-b bg-white shadow-sm h-20'>
       <div className=' min-h-full mx-auto md:max-w-6xl flex justify-between items-center'>
@@ -65,8 +67,7 @@ export const Header = (props) => {
         <div className='flex-1'/>
 
         <div className='mr-5 flex gap-4 items-center'>
-          <p className='font-light invisible sm:visible'>Max Mustermann</p>
-          <img className='rounded-full object-contain w-10 h-10 border shadow-md' alt='avatar' src="https://i.pravatar.cc/500" />
+          <p className='font-light invisible sm:visible'> {currentUserData.username} </p>
         </div>
 
       </div>
