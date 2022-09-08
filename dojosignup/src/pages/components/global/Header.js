@@ -66,7 +66,7 @@ export const Header = (props) => {
 
         <div className='mr-5 flex gap-4 items-center'>
           <p className='font-light invisible sm:visible'>Max Mustermann</p>
-          <img className='rounded-full object-contain w-10 h-10 border shadow-md' src="https://i.pravatar.cc/500" />
+          <img className='rounded-full object-contain w-10 h-10 border shadow-md' alt='avatar' src="https://i.pravatar.cc/500" />
         </div>
 
       </div>

@@ -1,12 +1,11 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { HomeIcon, PlusIcon} from '@heroicons/react/outline'
 import { Link } from 'react-router-dom'
 import { useRecoilState } from 'recoil';
 import { sidebarVisibleAtom } from '../../../atoms/sidebarVisibleAtom';
 import { PencilIcon } from '@heroicons/react/solid';
-import { logout } from '../../../firebase';
 import SignoutAndRedirect from './SignoutAndRedirect';
 
 export default function Sidebar() {

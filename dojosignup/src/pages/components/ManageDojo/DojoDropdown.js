@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, CogIcon } from '@heroicons/react/solid'
 import { useRecoilState } from 'recoil';
@@ -21,14 +21,9 @@ export default function Example() {
   //const dojoList = ["Dojo Handfertigkeiten", "Dojo Messmittel", "Montagedojo", "Spaßdojo nur zum Spaß", "Dojo schweißen", "Dojo löten"]
 
   //firebase connections
-  useEffect(() => {
-		// listens for changes in the firestore db, returns new db state as snapshot
-		const unsubscribe = onSnapshot(query(collection(db, 'dojos') ,orderBy('dojoName')), snapshot => {
+  onSnapshot(query(collection(db, 'dojos') ,orderBy('dojoName')), snapshot => {
 			setDojoList(snapshot.docs);
-		})
-		// prevents multiple db listeners
-		return unsubscribe;
-	}, [db])
+	})
 
   const handleItemSelect = (dojo) => {
     setSelectedDojo([dojo.data().dojoName, dojo.id]);

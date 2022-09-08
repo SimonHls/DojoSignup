@@ -24,9 +24,14 @@ const signInWithGoogle = async () => {
     if (docs.docs.length === 0) {
       await addDoc(collection(db, "users"), {
         userID: user.uid,
-        name: user.displayName,
+        username: user.displayName,
+        firstName: "",
+        lastName: "",
+        department: "",
+        persNr: null,
         authProvider: "google",
         email: user.email,
+        role: "USER"
       });
     }
   } catch (err) {
@@ -46,15 +51,20 @@ const logInWithEmailAndPassword = async (email, password) => {
 };
 
 //Register with email and password
-const registerWithEmailAndPassword = async (name, email, password) => {
+const registerWithEmailAndPassword = async (username, firstName, lastName, department, persNr, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
     await addDoc(collection(db, "users"), {
       uid: user.uid,
-      name,
+      username,
+      firstName,
+      lastName,
+      department,
+      persNr,
       authProvider: "local",
       email,
+      role: "USER"
     });
   } catch (err) {
     console.error(err);

@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { ReactComponent as GoogleLogo } from "../icons/Google__G__Logo.svg"
 
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
 
   const navigate = useNavigate();
 
@@ -18,10 +17,10 @@ function Login() {
       return;
     }
     if (user) navigate("/home");
-  }, [user, loading]);
+  }, [user, loading, navigate]);
 
   return (
-    <div className=" min-h-screen min-w-full flex justify-center items-center bg-gray-100">
+    <div className=" min-h-screen min-w-full flex justify-center items-center bg-gradient-to-br from-red-400 to-pink-400">
       <div className=" flex flex-col text-center bg-white p-10 rounded-md shadow-md">
         <h1 className="mb-6 text-lg font-light">Bei DojoSignup anmelden</h1>
         <input

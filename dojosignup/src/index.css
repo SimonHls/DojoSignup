@@ -18,8 +18,8 @@ code {
 
 @layer components {
   .blue-button {
-    @apply flex items-center justify-center w-64 p-3 px-4 rounded-2xl bg-blue-700 text-white text-2xl font-light
-    hover:bg-blue-600 hover:shadow-lg transition-all ease-out cursor-pointer shadow-sm;
+    @apply flex items-center justify-center w-64 p-3 px-4 rounded-2xl bg-slate-100 text-blue-900 text-2xl font-light
+    hover:bg-white hover:text-blue-800 hover:shadow-lg transition-all ease-out cursor-pointer;
   }
   .login-textbox {
     @apply p-3 text-sm mb-3 bg-gray-200 rounded-md shadow-sm
@@ -27,11 +27,14 @@ code {
   .register-textbox {
     @apply p-3 text-sm mb-3 bg-gray-200 rounded-md shadow-sm
   }
+  .reset-textbox {
+    @apply p-3 text-sm mb-3 bg-gray-200 rounded-md shadow-sm
+  }
   .background-animate {
     background-size: 400%;
-    -webkit-animation: BGAnimate 20s ease infinite;
-    -moz-animation: BGAnimate 20s ease infinite;
-    animation: BGAnimate 20s ease infinite;
+    -webkit-animation: BGAnimate 25s ease infinite;
+    -moz-animation: BGAnimate 25s ease infinite;
+    animation: BGAnimate 25s ease infinite;
   }
 
   @keyframes BGAnimate {

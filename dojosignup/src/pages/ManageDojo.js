@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { db } from "../firebase"
-import { collection, onSnapshot, query } from 'firebase/firestore';
+import React from 'react'
 import Header from './components/global/Header';
 import Sidebar from './components/global/Sidebar';
 import { useRecoilState } from 'recoil';
@@ -10,18 +8,7 @@ import { manageSelectedDojoAtom } from '../atoms/manageSelectedDojoAtom';
 
 function ManageDojo() {
 
-  const [dojoList, setDojoList] = useState([]);
   const [selectedDojo, setSelectedDojo] = useRecoilState(manageSelectedDojoAtom);
-
-  //firebase connections
-  useEffect(() => {
-    // listens for changes in the firestore db, returns new db state as snapshot
-    const unsubscribe = onSnapshot(query(collection(db, 'dojos')), snapshot => {
-      setDojoList(snapshot.docs);
-    })
-    // prevents multiple db listeners
-    return unsubscribe;
-  }, [db])
 
   return (
     <div className=' bg-gray-50 h-screen scrollbar-hide'>

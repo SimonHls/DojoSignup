@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Landingpage from './pages/Landingpage'
 import {
   RecoilRoot
@@ -16,6 +16,7 @@ import Login from './pages/Login';
 import PageNotFound from './pages/PageNotFound';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import Register from './pages/Register';
+import Reset from './pages/Reset';
 
 function App() {
 
@@ -90,6 +91,10 @@ function App() {
 
                 <Route path='/register' element={
                   <Register />
+                }/>
+
+                <Route path='/reset' element={
+                  <Reset />
                 }/>
 
                 <Route path='*' element={
