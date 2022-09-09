@@ -13,6 +13,7 @@ function InputSection() {
   const [submitDepartment, setSubmitDepartment] = useState("");
   const [submitDate, setSubmitDate] = useState();
   const [submitReason, setSubmitReason] = useState("");
+  const [] = useState();
 
   const insertPersonalData = () => {
     setSubmitFirstName(currentUserData.firstName);
@@ -32,12 +33,12 @@ function InputSection() {
 
       <Calendar />
 
-      <p className='font-light mt-8 '>
+      <p className='font-light mt-6 '>
         Persönliche Daten
       </p>
 
       <p
-        className=" text-gray-400 underline font-light w-fit text-sm cursor-pointer hover:text-gray-500"
+        className="mt-2 text-gray-400 underline font-light w-fit text-sm cursor-pointer hover:text-gray-500"
         onClick={() => insertPersonalData()}
       >
         Persönliche Daten aus Profil übertragen

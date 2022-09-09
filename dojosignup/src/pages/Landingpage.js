@@ -10,7 +10,7 @@ function Landingpage() {
 
   return (
     <div className='flex flex-col justify-center items-center min-h-full min-w-full
-         bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 background-animate'>
+         bg-gradient-to-br from-purple-400 via-pink-500 to-orange-400 background-animate'>
 
         <h1 className="text-7xl font-black p-4 mb-2 text-transparent bg-clip-text
             bg-gradient-to-r from-indigo-100 to-pink-100">

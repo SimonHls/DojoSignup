@@ -6,6 +6,7 @@ import { selectedDateAtom } from '../../../atoms/selectedDateAtom';
 import { getDaysInMonth, getFirstDayOfMonth } from '../../../functions/calendarFunctions';
 import CalendarDay from './CalendarDay';
 import MonthPicker from './MonthPicker';
+import Moment from 'moment';
 
 function Calendar() {
 
@@ -57,8 +58,8 @@ function Calendar() {
                                       bg-white px-4 py-2 text-gray-700 shadow-sm
                                       hover:bg-gray-100 cursor-pointer"
                 onClick={() => handleToggleCalendar()}>
-            <p className='w-64 truncate text-base font-normal'>Kalender anzeigen</p>
-            { calendarIsExtended ? 
+            <p className='w-64 truncate text-base font-normal'> { selectedDate ? Moment(selectedDate).format('D MMMM YYYY') : "Kalender öffnen" } </p>
+            { calendarIsExtended ?
             <ChevronUpIcon className="ml-2 mr-2 h-8 w-8 sticky right-0 text-gray-800" aria-hidden="true" />
             :
             <ChevronDownIcon className="ml-2 mr-2 h-8 w-8 sticky right-0 text-gray-800" aria-hidden="true" />
@@ -79,7 +80,7 @@ function Calendar() {
             leaveTo="opacity-0"
           >
 
-            <div className='absolute top-0 left-0 min-h-screen min-w-full bg-gray-100 opacity-60'
+            <div className='absolute top-0 left-0 min-h-screen min-w-full'
                 onClick={() => handleToggleCalendar()}/>
 
             <Transition.Child
@@ -97,14 +98,14 @@ function Calendar() {
                   <MonthPicker/>
 
                   <div className='flex flex-col'>
-                    <div className='grid grid-cols-7 gap-2 sm:gap-2'>
+                    <div className='grid grid-cols-7'>
                       {dayHeaders.map((dayHeader, index) => (
                         <div className='w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center' key={index}>
                           <h1 className='font-extralight text-lg'> {dayHeader} </h1>
                         </div>
                       ))}
 
-                      <div className='col-span-7 grid grid-cols-7 gap-2 sm:gap-2'>
+                      <div className='col-span-7 grid grid-cols-7'>
                         {dayArray.map((day, index) => (
                           <CalendarDay day={day} key={index} id={index}/>
                         ))}
