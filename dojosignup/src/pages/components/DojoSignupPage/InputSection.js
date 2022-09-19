@@ -1,11 +1,19 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useRecoilState } from 'recoil';
 import { currentUserDataAtom } from '../../../atoms/currentUserDataAtom';
+import { selectedDateAtom } from '../../../atoms/selectedDateAtom';
 import Calendar from './Calendar.js'
+import DojoDropdown from './DojoDropdown'
+import { db } from '../../../firebase'
+import { addDoc, collection, doc, getDocs, query, where } from 'firebase/firestore';
+import { dojoSignupSelectedDojoAtom } from '../../../atoms/dojoSignupSelectedDojoAtom';
+
 
 function InputSection() {
 
   const [currentUserData, setCurrentUserData] = useRecoilState(currentUserDataAtom);
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateAtom);
+  const [selectedDojo, setSelectedDojo] = useRecoilState(dojoSignupSelectedDojoAtom);
 
   const [submitFirstName, setSubmitFirstName] = useState("");
   const [submitLastName, setSubmitLastName] = useState("");
@@ -13,7 +21,7 @@ function InputSection() {
   const [submitDepartment, setSubmitDepartment] = useState("");
   const [submitDate, setSubmitDate] = useState();
   const [submitReason, setSubmitReason] = useState("");
-  const [] = useState();
+  const [inputIsValid, setInputIsValid] = useState(false);
 
   const insertPersonalData = () => {
     setSubmitFirstName(currentUserData.firstName);
@@ -22,18 +30,76 @@ function InputSection() {
     setSubmitDepartment(currentUserData.department);
   }
 
+  //pulls selected date from recoil to local state
+  useEffect(() => {
+    setSubmitDate(selectedDate)
+    console.log(submitDate);
+  }, [selectedDate])
+
+  //checks, if every input field is filled. If so, allow submit.
+  //Will also eventually check if the selected date has an available appointment
+  useEffect(() => {
+    //check if all fields have been filled
+    if (submitFirstName !== "" &&
+        submitLastName !== "" &&
+        submitPersNr !== "" &&
+        submitDepartment !== "" &&
+        submitDate &&
+        submitReason !== "") {
+          // Eventually, something like isValidDate needs to be checked instead of submitDate
+          setInputIsValid(true);
+          //console.log("input is valid");
+        }
+        else {
+          setInputIsValid(false);
+          //console.log("input is incomplete");
+        }
+  }, [submitFirstName, submitLastName, submitPersNr, submitDepartment, submitDate, submitReason]);
+
+  //Creates a new booking for the selected dojo at the selected date for the user
+  const bookAppointment = async () => {
+    if (inputIsValid) {
+      try {
+        //validate availability
+
+        //submit user data to db
+        const ref = collection(db, "dojos", selectedDojo, "dojoDates")
+        const dateQuery = query(ref, where("date", "==", selectedDate));
+        const currentSignups = dateQuery[0].collection("signups");
+        const newSubmission = await addDoc(collection(db, currentSignups), {
+          firstName: submitFirstName,
+          lastName: submitLastName,
+          persNr: submitPersNr,
+          department: submitDepartment,
+          reason: submitReason
+        });
+      }
+      catch (err) {
+        //fail -> document doesnt exist or connection not established
+        console.log(err);
+      }
+    }
+    else return;
+  }
+
   return (
     <div className='grid grid-cols-1 mt-8'>
 
       <h1 className=' text-xl font-bold'>Neue Dojoanmeldung</h1>
 
-      <p className='font-light mt-6'>
+      <p className='mt-4'>
+        Dojo auswählen
+      </p>
+
+      <DojoDropdown />
+
+      <p className='mt-6'>
         Termin auswählen
       </p>
 
       <Calendar />
 
-      <p className='font-light mt-6 '>
+      <p className='mt-6 '>
         Persönliche Daten
       </p>
 
@@ -124,11 +190,17 @@ function InputSection() {
 
       </div>
       <div className='relative min-w-full flex justify-end'>
-        <div className=' p-4 mt-4 bg-gray-400 w-fit rounded-lg text-white hover:bg-green-500 cursor-pointer'>
+        <div className={`p-4 mt-4 rounded-lg text-white w-fit
+          ${inputIsValid ?
+            'bg-emerald-400  hover:bg-emerald-500 hover:shadow-md cursor-pointer transition-all ease-out'
+            :
+            'bg-gray-400 cursor-not-allowed'}`}
+            onClick={() => bookAppointment()}
+        >
           Termin buchen
         </div>
       </div>
-      
+
     </div>
   )
 }
