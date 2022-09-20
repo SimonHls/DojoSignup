@@ -5,8 +5,9 @@ import { selectedDateAtom } from '../../../atoms/selectedDateAtom';
 import Calendar from './Calendar.js'
 import DojoDropdown from './DojoDropdown'
 import { db } from '../../../firebase'
-import { addDoc, collection, doc, getDocs, query, where } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import { dojoSignupSelectedDojoAtom } from '../../../atoms/dojoSignupSelectedDojoAtom';
+import moment from 'moment';
 
 
 function InputSection() {
@@ -32,9 +33,10 @@ function InputSection() {
 
   //pulls selected date from recoil to local state
   useEffect(() => {
-    setSubmitDate(selectedDate)
-    console.log(submitDate);
-  }, [selectedDate])
+    //Format fits database name structure
+    const tempDate = moment(selectedDate).format('YYYY-MM-DD').toString() + "T09:00"
+    setSubmitDate(tempDate);
+  }, [selectedDate, submitDate])
 
   //checks, if every input field is filled. If so, allow submit.
   //Will also eventually check if the selected date has an available appointment
@@ -63,15 +65,13 @@ function InputSection() {
         //validate availability
 
         //submit user data to db
-        const ref = collection(db, "dojos", selectedDojo, "dojoDates")
-        const dateQuery = query(ref, where("date", "==", selectedDate));
-        const currentSignups = dateQuery[0].collection("signups");
-        const newSubmission = await addDoc(collection(db, currentSignups), {
-          firstName: submitFirstName,
-          lastName: submitLastName,
-          persNr: submitPersNr,
-          department: submitDepartment,
-          reason: submitReason
+        const ref = collection(db, "/dojos/" + selectedDojo[1] + "/dojoDates/" + submitDate + "/signups");
+        await addDoc((ref), {
+           firstName: submitFirstName,
+           lastName: submitLastName,
+           persNr: submitPersNr,
+           department: submitDepartment,
+           reason: submitReason
         });
       }
       catch (err) {
@@ -189,12 +189,12 @@ function InputSection() {
       </div>
 
       </div>
-      <div className='relative min-w-full flex justify-end'>
-        <div className={`p-4 mt-4 rounded-lg text-white w-fit
+      <div className='relative min-w-full flex justify-center'>
+        <div className={`p-4 px-6 mt-4 rounded-lg text-white w-fit
           ${inputIsValid ?
-            'bg-emerald-400  hover:bg-emerald-500 hover:shadow-md cursor-pointer transition-all ease-out'
+            'bg-emerald-500  hover:bg-green-500 font-medium text-lg hover:shadow-md cursor-pointer transition-all ease-out'
             :
-            'bg-gray-400 cursor-not-allowed'}`}
+            'bg-gray-400 cursor-not-allowed font-medium text-lg'}`}
             onClick={() => bookAppointment()}
         >
           Termin buchen
