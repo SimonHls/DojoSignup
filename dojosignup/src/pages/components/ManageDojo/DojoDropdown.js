@@ -4,7 +4,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, CogIcon } from '@heroicons/react/solid'
 import { useRecoilState } from 'recoil';
 import { manageSelectedDojoAtom } from '../../../atoms/manageSelectedDojoAtom';
-import { db } from "../../../firebase"
+import { db, logInWithEmailAndPassword } from "../../../firebase"
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 
 

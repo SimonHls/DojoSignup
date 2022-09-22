@@ -41,7 +41,8 @@ function InputSection() {
   //Will also eventually check if the selected date has an available appointment
   useEffect(() => {
     //check if all fields have been filled
-    if (submitFirstName !== "" &&
+    if (selectedDojo[0] !== undefined &&
+        submitFirstName !== "" &&
         submitLastName !== "" &&
         submitPersNr !== "" &&
         submitDepartment !== "" &&
@@ -55,7 +56,7 @@ function InputSection() {
           setInputIsValid(false);
           //console.log("input is incomplete");
         }
-  }, [submitFirstName, submitLastName, submitPersNr, submitDepartment, submitDate, submitReason]);
+  }, [submitFirstName, submitLastName, submitPersNr, submitDepartment, submitDate, submitReason, selectedDojo[0]]);
 
   //Creates a new booking for the selected dojo at the selected date for the user, if spaces are available
   const bookAppointment = async () => {

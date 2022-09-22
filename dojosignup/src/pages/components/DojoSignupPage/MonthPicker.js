@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import { useRecoilState } from 'recoil'
 import { displayAsMonth } from '../../../functions/calendarFunctions';
 import { selectedDateAtom } from '../../../atoms/selectedDateAtom';
+import { signupAvailableDatesAtom } from '../../../atoms/signupAvailableDatesAtom';
+import { collection, getDocs } from 'firebase/firestore';
+import { dojoSignupSelectedDojoAtom } from '../../../atoms/dojoSignupSelectedDojoAtom';
+import { db } from '../../../firebase';
 
 function MonthPicker() {
 
-  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateAtom)
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateAtom);
+  const [globalAvailableDates, setGlobalAvailableDates] = useRecoilState(signupAvailableDatesAtom);
+  const [selectedDojo, setSelectedDojo] = useRecoilState(dojoSignupSelectedDojoAtom);
+
 
   const handleNextMonth = () => {
     clearSelection();
@@ -21,6 +28,28 @@ function MonthPicker() {
     newDate.setMonth(selectedDate.getMonth()-1)
     setSelectedDate(newDate);
   }
+  useEffect(() => {
+    const getAvailableDates = async () => {
+      let availableDates = [];
+      try {
+        const availableDatesRef = collection(db, "/dojos/" + selectedDojo[1] + "/dojoDates/")
+        const availableDatesDocs = await getDocs(availableDatesRef);
+        let i = 0;
+        availableDatesDocs.forEach((doc) => {
+          availableDates[i, 0] = doc.id;
+          availableDates[i, 1] = doc.data().availableSpaces;
+          i++;
+        });
+        setGlobalAvailableDates(availableDates);
+        console.log("rep");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    return () => {
+      getAvailableDates();
+    }
+  }, [setGlobalAvailableDates, selectedDojo[1], db])
 
   return (
     <div className='flex justify-center w-fit'>
