@@ -5,10 +5,9 @@ import { selectedDateAtom } from '../../../atoms/selectedDateAtom';
 import Calendar from './Calendar.js'
 import DojoDropdown from './DojoDropdown'
 import { db } from '../../../firebase'
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getDocs, onSnapshot } from 'firebase/firestore';
 import { dojoSignupSelectedDojoAtom } from '../../../atoms/dojoSignupSelectedDojoAtom';
 import moment from 'moment';
-
 
 function InputSection() {
 
@@ -58,21 +57,44 @@ function InputSection() {
         }
   }, [submitFirstName, submitLastName, submitPersNr, submitDepartment, submitDate, submitReason]);
 
-  //Creates a new booking for the selected dojo at the selected date for the user
+  //Creates a new booking for the selected dojo at the selected date for the user, if spaces are available
   const bookAppointment = async () => {
     if (inputIsValid) {
       try {
+        //reference for db connection
+        const availableSpacesRef = doc(db, "/dojos/" + selectedDojo[1] + "/dojoDates/" + submitDate)
+        const signupRef = collection(db, "/dojos/" + selectedDojo[1] + "/dojoDates/" + submitDate + "/signups");
         //validate availability
+        const availableSpacesSnap = await getDoc(availableSpacesRef);
+        let availableSpaces = 0;
+        if (availableSpacesSnap.exists()) {
+          availableSpaces = availableSpacesSnap.data().availableSpaces;
+        } else {
+          return;
+        }
 
+        //get number of signups
+        const collSnap = await getDocs(signupRef);
+        let docCounter = 0;
+        collSnap.forEach((doc) => {
+          docCounter ++;
+        })
+
+        //console.log("Total spaces Available: " + availableSpaces);
+        //console.log("Spaces booked: " + docCounter);
+
+        //are there spaces available?
+        let spacesAreAvailable = false;
+        if (docCounter < availableSpaces) spacesAreAvailable = true;
         //submit user data to db
-        const ref = collection(db, "/dojos/" + selectedDojo[1] + "/dojoDates/" + submitDate + "/signups");
-        await addDoc((ref), {
+        spacesAreAvailable && (await addDoc((signupRef), {
            firstName: submitFirstName,
            lastName: submitLastName,
+           userId: currentUserData.userId,
            persNr: submitPersNr,
            department: submitDepartment,
            reason: submitReason
-        });
+        }));
       }
       catch (err) {
         //fail -> document doesnt exist or connection not established
